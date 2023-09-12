@@ -14,9 +14,9 @@ public class AxisDraw : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         Debug.Drawline(transform.position, transform.position + new Vector3(linelength, 0, 0), Color.red);
-
+        
         Debug.Drawline(transform.position, transform.position + new Vector3(0, linelength, 0), Color.green);
         
         Debug.Drawline(transform.position, transform.position + new Vector3(0, 0, linelength), Color.blue);
