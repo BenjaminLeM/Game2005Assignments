@@ -25,7 +25,13 @@ public class Bounce : MonoBehaviour
 
         // Write code to do the following:
         if (transform.position.y - 1 <= 0) {
-            vel = -vel;
+
+            transform.position = new Vector3(
+            transform.position.x,
+            1,
+            transform.position.z
+            );
+            vel = -vel*0.95f;
         }
         
         // When the ball goes below the ground plane,
