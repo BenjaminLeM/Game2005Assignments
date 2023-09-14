@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\WackyMove.cs" />
+    <Compile Include="Assets\Bounce.cs" />
     <Compile Include="Assets\AxisDraw.cs" />
   </ItemGroup>
   <ItemGroup>

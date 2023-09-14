@@ -24,6 +24,10 @@ public class Bounce : MonoBehaviour
         );
 
         // Write code to do the following:
+        if (transform.position.y - 1 <= 0) {
+            vel = -vel;
+        }
+        
         // When the ball goes below the ground plane,
         // reset its position to zero and reset its velocity to the initial velocity
         // (if done correctly, the ball will bounce)
