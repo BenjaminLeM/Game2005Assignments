@@ -14,7 +14,7 @@ public class WackyMove : MonoBehaviour
     X = X + (-Mathf.Sin(t * a) * a * b * dt);
     Y = Y + (-Mathf.Cos(t * a) * a * b * dt);
 
-    transform.popsition = new Vector3(X, Y, transform.position.z);
+    transform.position = new Vector3(X, Y, transform.position.z);
     t += dt;
     }
 }
