@@ -18,6 +18,8 @@ public class Projectile : MonoBehaviour
 
     void LaunchBall()
     {
+        
+        transform.position = new Vector3(transform.position.x, launchHeight, transform.position.z);
         // 1. Update velX and velY based on horizontal and vertical components of launch velocity & launch angle
         // 2. Assign position to new launch height and re-launch the ball!
     }
