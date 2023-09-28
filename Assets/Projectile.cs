@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float launchVelocity = 10.0f;
+    public float launchVelocity;
     public float launchAngle = 30.0f;
     public float launchHeight = 3.0f;
 
@@ -19,8 +19,8 @@ public class Projectile : MonoBehaviour
     void LaunchBall()
     {
         // 1. Update velX and velY based on horizontal and vertical components of launch velocity & launch angle
-        velX =  Mathf.Cos(launchAngle) * launchVelocity;
-        velY =  Mathf.Sin(launchAngle) * launchVelocity;
+        velX =  Mathf.Cos(Mathf.Deg2Rad * launchAngle) * launchVelocity;
+        velY =  Mathf.Sin(Mathf.Deg2Rad * launchAngle) * launchVelocity; 
         // 2. Assign position to new launch height and re-launch the ball!
         transform.position = new Vector3(-12.0f, launchHeight, 32.0f);
     }
