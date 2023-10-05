@@ -62,6 +62,8 @@
     <Compile Include="Assets\Bounce.cs" />
     <Compile Include="Assets\Projectile.cs" />
     <Compile Include="Assets\AxisDraw.cs" />
+    <Compile Include="Assets\Body.cs" />
+    <Compile Include="Assets\ProjectileBody.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
