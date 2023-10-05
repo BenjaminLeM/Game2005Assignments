@@ -11,45 +11,22 @@ public class ProjectileBody : Body
     public float launchSpeed = 5.0f;
     public float launchPitch = 50.0f;
     public float launchYaw = 25.0f;
-    public float velX;
-    public float velY;
-    public float velZ;
-    public float airResistance = 0.91f;
     public float terminalVelocity = 500.0f;
-    float dt = Time.fixedDeltaTime;
-
-    void Launch()
-    {
-        // TODO -- Decompose pitch and yaw into velocity x, y & z!
-        velX = (Mathf.Cos(Mathf.Deg2Rad * launchYaw)*Mathf.Cos(Mathf.Deg2Rad * launchPitch));
-        velY = (Mathf.Sin(Mathf.Deg2Rad * launchYaw)*Mathf.Cos(Mathf.Deg2Rad * launchPitch));
-        velZ = (Mathf.Sin(Mathf.Deg2Rad * launchPitch));
-        // TODO -- Add controls to change the direction of the acceleration (key input or GUI slider)
-
-        // TODO -- Add drag (air resistance) to the simulation (similar to exercise 2 where we dampened the velocity on-bounce)
-        // ex: multiplying by 0.99 gives a little air resistance, multiplying by 0.01 gives a lot of air resistance!
-
-        // TODO -- Add terminal velocity; constrain your velocity so its magnitude cannot exceed a certain threshold
-        // ex: object cannot travel faster than 500m/s (if speed > 500, speed = 500)
-    }
+    public float dt;
 
     private void Start()
     {
-        Launch();
+        dt = Time.fixedDeltaTime;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Launch();
-        }
         Simulate(Physics.gravity, Time.fixedDeltaTime);
         transform.position = new Vector3(
-            transform.position.x + velX,
-            transform.position.y + velY,
-            transform.position.z + velX
+            transform.position.x + (vel.x * dt) * drag,
+            transform.position.y + (vel.y * dt) * drag,
+            transform.position.z + (vel.z * dt) * drag
         );
     }
 }
