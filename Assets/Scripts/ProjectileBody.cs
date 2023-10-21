@@ -36,7 +36,26 @@ public class ProjectileBody : MonoBehaviour
             for (int j = 0; j < bodies.Count; j++)
             {
                 Body bodyB = bodies[j];
+                //checks for collision detection type
+                if (bodyA.GetShape() == 0 && bodyB.GetShape() == 0)
+                {
+                    if (checkSphereSphereCollision(bodyA, bodyB))
+                    {
+                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                    }
+                    else
+                    {
+                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                    }
+                }
+                else if (bodyA.GetShape() == 0 && bodyB.GetShape() == 2) 
+                {
+                
+                }
+                else if (bodyA.GetShape() == 0 && bodyB.GetShape() == 3)
+                {
 
+                }
             }
         }
     }
@@ -49,6 +68,7 @@ public class ProjectileBody : MonoBehaviour
     void FixedUpdate()
     {
         checkForNewBodies();
+        checkCollision();
         foreach (Body body in bodies)
         {
             if (body.isProjectile)
