@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\AxisDraw.cs" />
     <Compile Include="Assets\Scripts\ProjectileBody.cs" />
+    <Compile Include="Assets\Scripts\Shape.cs" />
     <Compile Include="Assets\Scripts\Bounce.cs" />
     <Compile Include="Assets\Scripts\Body.cs" />
   </ItemGroup>

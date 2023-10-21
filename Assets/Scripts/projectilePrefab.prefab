@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3115001374013764194}
   - component: {fileID: 2553168021727810551}
   - component: {fileID: 2599947886160448145}
-  - component: {fileID: 1964131423421276459}
+  - component: {fileID: 6519842372211541975}
   m_Layer: 0
   m_Name: projectilePrefab
   m_TagString: Untagged
@@ -106,7 +106,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1964131423421276459
+--- !u!114 &6519842372211541975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,20 +115,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3367971244874006189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1239e357fb21554f87e03e607e1f8fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fb9078c791de224b990d12f994673f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   vel: {x: 0, y: 0, z: 0}
-  mass: 6.27
+  mass: 1
   drag: 0
-  launchPosition: {x: 0, y: 0, z: 0}
-  launchSpeed: 10
-  launchPitch: 20
-  launchYaw: 40
-  velX: 0
-  velY: 0
-  velZ: 0
-  airResistance: 0.01
-  terminalVelocity: 500
-  dt: 0
-  bodyList: []
