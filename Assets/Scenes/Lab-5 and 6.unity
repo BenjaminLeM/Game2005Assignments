@@ -552,7 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb9078c791de224b990d12f994673f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShapeType: 3
+  ShapeType: 2
   vel: {x: 0, y: 0, z: 0}
   grav: 1
   drag: 0
