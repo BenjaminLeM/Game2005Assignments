@@ -43,6 +43,16 @@ public class ProjectileBody : MonoBehaviour
         float projection = Vector3.Dot(displacement, normal);
         return projection < bodyA.radius;
     }
+
+    Body Fix(Body body) 
+    {
+        body.isProjectile = false;
+        body.transform.localPosition -= new Vector3(
+                    (body.vel.x * dt) * body.drag,
+                    (body.vel.y * dt) * body.drag,
+                    (body.vel.z * dt) * body.drag);
+        return body;
+    }
     private void checkCollision()
     {
         for (int i = 0; i < bodies.Count; i++)
@@ -70,7 +80,7 @@ public class ProjectileBody : MonoBehaviour
                         bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
                         if (bodyA.isProjectile) 
                         {
-                            bodyA.isProjectile = false;
+                            bodyA = Fix(bodyA);
                         }
                     }
                     else
@@ -96,7 +106,7 @@ public class ProjectileBody : MonoBehaviour
                         bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
                         if (bodyA.isProjectile)
                         {
-                            bodyA.isProjectile = false;
+                            bodyA = Fix(bodyA);
                         }
                     }
                     else
@@ -138,7 +148,7 @@ public class ProjectileBody : MonoBehaviour
                     (body.vel.z * dt) * body.drag);
             }
         }
-
+        
         //Simulate(Physics.gravity, Time.fixedDeltaTime);
         //transform.position = new Vector3(
         //    transform.position.x + (vel.x * dt) * drag,
