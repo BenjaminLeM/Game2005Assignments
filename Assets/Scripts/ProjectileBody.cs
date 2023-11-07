@@ -68,6 +68,10 @@ public class ProjectileBody : MonoBehaviour
                     if (checkSpherePlaneCollision(bodyA, bodyB))
                     {
                         bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                        if (bodyA.isProjectile) 
+                        {
+                            bodyA.isProjectile = false;
+                        }
                     }
                     else
                     {
@@ -90,6 +94,10 @@ public class ProjectileBody : MonoBehaviour
                     if (checkSphereHalfPlaneCollision(bodyA, bodyB))
                     {
                         bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                        if (bodyA.isProjectile)
+                        {
+                            bodyA.isProjectile = false;
+                        }
                     }
                     else
                     {
@@ -119,7 +127,6 @@ public class ProjectileBody : MonoBehaviour
     private void FixedUpdate()
     {
         checkForNewBodies();
-        checkCollision();
         foreach (Body body in bodies)
         {
             if (body.isProjectile)
@@ -138,5 +145,9 @@ public class ProjectileBody : MonoBehaviour
         //    transform.position.y + (vel.y * dt) * drag,
         //    transform.position.z + (vel.z * dt) * drag
         //);
+    }
+    private void Update()
+    {
+        checkCollision();
     }
 }
