@@ -54,7 +54,7 @@ public class ProjectileBody : MonoBehaviour
         bodyA.vel -= Friction;
         //draw forces
         Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + (normal*(-grav.y)), Color.green);
-        //Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + grav, Color.magenta);
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + grav, Color.magenta);
         Debug.DrawLine(bodyA.transform.position, bodyA.transform.position - (Friction/dt), Color.yellow);
         return bodyA;
     }
