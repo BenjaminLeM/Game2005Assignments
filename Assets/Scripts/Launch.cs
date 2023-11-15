@@ -26,7 +26,7 @@ public class Launch : MonoBehaviour
                                 launchSpeed * (Mathf.Sin(Mathf.Deg2Rad * launchYaw) * Mathf.Cos(Mathf.Deg2Rad * launchPitch)),
                                 launchSpeed * (Mathf.Sin(Mathf.Deg2Rad * launchPitch)));
         body.drag = drag;
-        body.grav = gravity;
+        body.weight = gravity;
     }
 
     // Update is called once per frame

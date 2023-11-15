@@ -46,14 +46,20 @@ public class ProjectileBody : MonoBehaviour
 
     Body Fix(Body bodyA, Body bodyB) 
     {
-        bodyA.isProjectile = false;
         Vector3 normal = bodyB.transform.rotation * new Vector3(0, 1, 0);
         Vector3 displacement = bodyA.transform.position - bodyB.transform.position;
         float projection = Vector3.Dot(displacement, normal);
         bodyA.transform.position += normal * (bodyA.radius - projection);
-
+        Vector3 Friction = (((bodyA.vel * dt) + (normal * (bodyA.radius - projection))) * 0.99f);
+        bodyA.vel -= Friction;
+        //draw forces
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + (normal*(-grav.y)), Color.green);
+        //Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + grav, Color.magenta);
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position - (Friction/dt), Color.yellow);
         return bodyA;
     }
+
+
     private void checkCollision()
     {
         for (int i = 0; i < bodies.Count; i++)
