@@ -16,5 +16,9 @@ public class Body : Shape
     {
         vel = vel + acc * weight * dt;
         transform.position = transform.position + vel * dt;
+        if (vel.y <= -30.0f)
+        {
+            vel.y = -30.0f;
+        }
     }
 }

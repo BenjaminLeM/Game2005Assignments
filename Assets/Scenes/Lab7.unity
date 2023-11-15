@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeType: 2
   vel: {x: 0, y: 0, z: 0}
-  grav: 1
+  weight: 1
   drag: 0
   radius: 0.5
   isProjectile: 0
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeType: 3
   vel: {x: 0, y: 0, z: 0}
-  grav: 1
+  weight: 1
   drag: 0
   radius: 0.5
   isProjectile: 0
@@ -659,13 +659,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 735956407}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0006312041, y: -0.00020757457, z: 0.03914587, w: 0.9992333}
-  m_LocalPosition: {x: 59.2, y: -12.8, z: -5.9026275}
+  m_LocalRotation: {x: -0.0005734614, y: -0.0003356304, z: 0.2483343, w: 0.9686741}
+  m_LocalPosition: {x: 59.2, y: -17.2, z: -5.9026275}
   m_LocalScale: {x: 15, y: 1, z: 15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -0.071, y: -0.027, z: 4.487}
+  m_LocalEulerAnglesHint: {x: -0.054, y: -0.054, z: 28.758}
 --- !u!114 &735956412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,7 +680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeType: 2
   vel: {x: 0, y: 0, z: 0}
-  grav: 1
+  weight: 1
   drag: 0
   radius: 0.5
   isProjectile: 0
@@ -718,7 +718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeType: 0
   vel: {x: 0, y: 0, z: 0}
-  grav: 1
+  weight: 1
   drag: 0
   radius: 0.5
   isProjectile: 1
@@ -842,7 +842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeType: 0
   vel: {x: 0, y: 0, z: 0}
-  grav: 1
+  weight: 1
   drag: 0
   radius: 0.5
   isProjectile: 1
@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeType: 0
   vel: {x: 0, y: 0, z: 0}
-  grav: 1
+  weight: 1
   drag: 0
   radius: 0.5
   isProjectile: 1
@@ -1158,7 +1158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeType: 2
   vel: {x: 0, y: 0, z: 0}
-  grav: 1
+  weight: 1
   drag: 0
   radius: 0.5
   isProjectile: 0
@@ -1283,7 +1283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeType: 0
   vel: {x: 0, y: 0, z: 0}
-  grav: 1
+  weight: 1
   drag: 0
   radius: 0.5
   isProjectile: 1
