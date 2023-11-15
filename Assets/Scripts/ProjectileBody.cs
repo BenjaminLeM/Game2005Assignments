@@ -44,14 +44,15 @@ public class ProjectileBody : MonoBehaviour
         return projection < bodyA.radius;
     }
 
-    Body Fix(Body body) 
+    Body Fix(Body bodyA, Body bodyB) 
     {
-        body.isProjectile = false;
-        body.transform.localPosition -= new Vector3(
-                    (body.vel.x * dt) * body.drag,
-                    (body.vel.y * dt) * body.drag,
-                    (body.vel.z * dt) * body.drag);
-        return body;
+        bodyA.isProjectile = false;
+        Vector3 normal = bodyB.transform.rotation * new Vector3(0, 1, 0);
+        Vector3 displacement = bodyA.transform.position - bodyB.transform.position;
+        float projection = Vector3.Dot(displacement, normal);
+        bodyA.transform.position += normal * (bodyA.radius - projection);
+
+        return bodyA;
     }
     private void checkCollision()
     {
@@ -80,7 +81,7 @@ public class ProjectileBody : MonoBehaviour
                         bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
                         if (bodyA.isProjectile) 
                         {
-                            bodyA = Fix(bodyA);
+                            bodyA = Fix(bodyA, bodyB);
                         }
                     }
                     else
@@ -106,7 +107,7 @@ public class ProjectileBody : MonoBehaviour
                         bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
                         if (bodyA.isProjectile)
                         {
-                            bodyA = Fix(bodyA);
+                            bodyA = Fix(bodyA, bodyB);
                         }
                     }
                     else
@@ -148,16 +149,13 @@ public class ProjectileBody : MonoBehaviour
                     (body.vel.z * dt) * body.drag);
             }
         }
-        
+        checkCollision();
+
         //Simulate(Physics.gravity, Time.fixedDeltaTime);
         //transform.position = new Vector3(
         //    transform.position.x + (vel.x * dt) * drag,
         //    transform.position.y + (vel.y * dt) * drag,
         //    transform.position.z + (vel.z * dt) * drag
         //);
-    }
-    private void Update()
-    {
-        checkCollision();
     }
 }
