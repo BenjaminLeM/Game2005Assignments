@@ -49,14 +49,32 @@ public class ProjectileBody : MonoBehaviour
         Vector3 normal = bodyB.transform.rotation * new Vector3(0, 1, 0);
         Vector3 displacement = bodyA.transform.position - bodyB.transform.position;
         float projection = Vector3.Dot(displacement, normal);
+        Vector3 gravityForce = grav * bodyA.mass;
+        bodyA.AddForce(gravityForce);
+
+        //normal forces
+        Vector3 gravityForcePerpendicular = Vector3.Dot(gravityForce, normal) * normal;
+        Vector3 normalForce = -gravityForcePerpendicular;
+
+        //find net force in parallel direction to surface
+        Vector3 fNetParallel = -(gravityForce - gravityForcePerpendicular);
+        float fNetParallelMagnitude = fNetParallel.magnitude;
+        Vector3 FrictionDirection = fNetParallel.normalized;
+
+
+        float FrictionMagnitude = Mathf.Min(fNetParallelMagnitude,normalForce.magnitude*bodyA.coefficientOfFriction);
+        Vector3 FrictionForce = FrictionDirection * FrictionMagnitude;
+
+        //Vector3 Friction = (((bodyA.vel * dt) + (normal * (bodyA.radius - projection))) * 0.5f);
+        
         bodyA.transform.position += normal * (bodyA.radius - projection);
-        Vector3 Friction = (((bodyA.vel * dt) + (normal * (bodyA.radius - projection))) * 0.55f);
-        bodyA.transform.position -= Friction;
-        //bodyA.vel -= Friction;
+        //bodyA.vel += FrictionForce * dt;
+        bodyA.vel = Vector3.zero;
         //draw forces
-        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + (normal*(-grav.y)), Color.green);
-        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + grav, Color.magenta);
-        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position - (Friction/dt), Color.yellow);
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + normalForce, Color.green);
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + gravityForce, Color.magenta);
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + fNetParallel, Color.yellow);
+        bodyA.ResetForces();
         return bodyA;
     }
 
