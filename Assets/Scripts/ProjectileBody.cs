@@ -77,7 +77,7 @@ public class ProjectileBody : MonoBehaviour
         //draw forces
         Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + normalForce, Color.green);
         Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + gravityForce, Color.magenta);
-        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + FrictionForce, Color.yellow);
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + FrictionForce * 0.3f, Color.yellow);
         bodyA.ResetForces();
         return bodyA;
     }
