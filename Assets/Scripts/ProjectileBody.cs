@@ -55,6 +55,7 @@ public class ProjectileBody : MonoBehaviour
         //normal forces
         Vector3 gravityForcePerpendicular = Vector3.Dot(gravityForce, normal) * normal;
         Vector3 normalForce = -gravityForcePerpendicular;
+        bodyA.AddForce(normalForce);
 
         //find net force in parallel direction to surface
         Vector3 fNetParallel = -(gravityForce - gravityForcePerpendicular);
@@ -64,16 +65,19 @@ public class ProjectileBody : MonoBehaviour
 
         float FrictionMagnitude = Mathf.Min(fNetParallelMagnitude,normalForce.magnitude*bodyA.coefficientOfFriction);
         Vector3 FrictionForce = FrictionDirection * FrictionMagnitude;
+        bodyA.AddForce(FrictionForce * 0.3f);
 
         //Vector3 Friction = (((bodyA.vel * dt) + (normal * (bodyA.radius - projection))) * 0.5f);
         
         bodyA.transform.position += normal * (bodyA.radius - projection);
-        //bodyA.vel += FrictionForce * dt;
-        bodyA.vel = Vector3.zero;
+        
+        bodyA.vel += (FrictionForce * 0.3f) * dt;
+        
+        //bodyA.vel = Vector3.zero;
         //draw forces
         Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + normalForce, Color.green);
         Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + gravityForce, Color.magenta);
-        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + fNetParallel, Color.yellow);
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + FrictionForce, Color.yellow);
         bodyA.ResetForces();
         return bodyA;
     }
