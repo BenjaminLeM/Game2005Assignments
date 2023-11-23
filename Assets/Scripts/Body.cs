@@ -12,7 +12,7 @@ public class Body : Shape
 
     public float drag = 0.0f;
     public float radius = 0.5f;
-    public bool isProjectile = true;
+    public bool isKinematic = true;
     public float coefficientOfFriction = 0.5f;
     public Vector3 NetForce 
     {
@@ -29,11 +29,19 @@ public class Body : Shape
     }
     public void Simulate(Vector3 acc, float dt)
     {
-        vel = vel + acc * mass * dt;
+        Vector3 fGrav = acc * mass;
+        AddForce(fGrav);
+        //F = M * acc
+        //-20 = 2 * -10
+        //a = f/m
+        //a = -20/2
+        Vector3 Acceleration = NetForce / mass;
+        vel += Acceleration * dt;
         transform.position = transform.position + vel * dt;
         if (vel.y <= -30.0f)
         {
             vel.y = -30.0f;
         }
+        ResetForces();
     }
 }

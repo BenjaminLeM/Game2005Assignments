@@ -50,7 +50,6 @@ public class ProjectileBody : MonoBehaviour
         Vector3 displacement = bodyA.transform.position - bodyB.transform.position;
         float projection = Vector3.Dot(displacement, normal);
         Vector3 gravityForce = grav * bodyA.mass;
-        bodyA.AddForce(gravityForce);
 
         //normal forces
         Vector3 gravityForcePerpendicular = Vector3.Dot(gravityForce, normal) * normal;
@@ -62,23 +61,30 @@ public class ProjectileBody : MonoBehaviour
         float fNetParallelMagnitude = fNetParallel.magnitude;
         Vector3 FrictionDirection = fNetParallel.normalized;
 
+        //find velocity in perpendicular and parallel direction to the surface 
+        Vector3 Velocity = bodyA.vel;
+        Vector3 VelocityPerpendicular = Vector3.Dot(Velocity, normal) * normal;
+        Vector3 VelocityParallel = Velocity - VelocityPerpendicular;
 
-        float FrictionMagnitude = Mathf.Min(fNetParallelMagnitude,normalForce.magnitude*bodyA.coefficientOfFriction);
-        Vector3 FrictionForce = FrictionDirection * FrictionMagnitude;
-        bodyA.AddForce(FrictionForce * 0.3f);
-
-        //Vector3 Friction = (((bodyA.vel * dt) + (normal * (bodyA.radius - projection))) * 0.5f);
-        
-        bodyA.transform.position += normal * (bodyA.radius - projection);
-        
-        bodyA.vel += (FrictionForce * 0.3f) * dt;
-        
-        //bodyA.vel = Vector3.zero;
-        //draw forces
+        float FrictionMagnitude = normalForce.magnitude*bodyA.coefficientOfFriction;
+        Vector3 FrictionForce = -VelocityParallel.normalized * FrictionMagnitude;
+        if (Vector3.Dot(Velocity, normal) < 0)
+        {
+            bodyA.AddForce(FrictionForce);
+            bodyA.transform.position += normal * (bodyA.radius - projection);
+        }
         Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + normalForce, Color.green);
         Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + gravityForce, Color.magenta);
-        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + FrictionForce * 0.3f, Color.yellow);
-        bodyA.ResetForces();
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + FrictionForce, Color.yellow);
+        Debug.DrawLine(bodyA.transform.position, bodyA.transform.position + Velocity, Color.red);
+
+
+        //bodyA.vel += (FrictionForce * 0.3f) * dt;
+
+        //bodyA.vel = Vector3.zero;
+        //draw forces
+
+
         return bodyA;
     }
 
@@ -108,7 +114,7 @@ public class ProjectileBody : MonoBehaviour
                     if (checkSpherePlaneCollision(bodyA, bodyB))
                     {
                         bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-                        if (bodyA.isProjectile) 
+                        if (bodyA.isKinematic) 
                         {
                             bodyA = Fix(bodyA, bodyB);
                         }
@@ -134,7 +140,7 @@ public class ProjectileBody : MonoBehaviour
                     if (checkSphereHalfPlaneCollision(bodyA, bodyB))
                     {
                         bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-                        if (bodyA.isProjectile)
+                        if (bodyA.isKinematic)
                         {
                             bodyA = Fix(bodyA, bodyB);
                         }
@@ -169,7 +175,7 @@ public class ProjectileBody : MonoBehaviour
         checkForNewBodies();
         foreach (Body body in bodies)
         {
-            if (body.isProjectile)
+            if (body.isKinematic)
             {
                 body.Simulate(grav, dt);
                 body.transform.localPosition += new Vector3(
@@ -179,7 +185,6 @@ public class ProjectileBody : MonoBehaviour
             }
         }
         checkCollision();
-
         //Simulate(Physics.gravity, Time.fixedDeltaTime);
         //transform.position = new Vector3(
         //    transform.position.x + (vel.x * dt) * drag,
