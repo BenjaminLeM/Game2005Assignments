@@ -88,7 +88,7 @@ public class ProjectileBody : MonoBehaviour
         return bodyA;
     }
 
-    Body MomentumConservationCollision(Body bodyA, Body bodyB) 
+    void MomentumConservationCollision(Body bodyA, Body bodyB) 
     {
         Vector3 normal = (bodyB.transform.position - bodyA.transform.position).normalized;
         Vector3 displacement = bodyA.transform.position - bodyB.transform.position;
@@ -98,20 +98,23 @@ public class ProjectileBody : MonoBehaviour
 
         Vector3 ClosingVelocity = Vector3.Dot(RelativeVelocity, normal) * normal;
 
-        
+        //average of the bounciness
+        float Restitution = (bodyA.Bounciness + bodyB.Bounciness) / 2;
+
+        Vector3 ClosingVelocityRetained = Restitution * ClosingVelocity;
+
+        Vector3 ClosingVelocityFinal = -ClosingVelocityRetained;
+
+        Vector3 Impulse = -(1 + Restitution) * ClosingVelocity * bodyA.mass * bodyB.mass / (bodyA.mass + bodyB.mass);
+
+        Vector3 VelocityFinal = Impulse/bodyA.mass;
 
         if (Vector3.Dot(RelativeVelocity, normal) >= 0) 
         {}
         else
         {
-            bodyA.vel += (bodyB.mass / bodyA.mass) * RelativeVelocity;
+            bodyA.vel += ((bodyB.mass / bodyA.mass) * ClosingVelocity);
         }
-
-        //moves bodyA out of bodyB
-        //currently broken and does not do the intended action
-        bodyB.transform.position += normal * ((bodyB.radius - projection)/2);
-
-        return bodyA;
     }
 
     private void checkCollision()
@@ -127,9 +130,7 @@ public class ProjectileBody : MonoBehaviour
                 {
                     if (checkSphereSphereCollision(bodyA, bodyB))
                     {
-                        bodyA = MomentumConservationCollision(bodyA, bodyB);
-                        bodyB = MomentumConservationCollision(bodyB, bodyA);
-
+                        MomentumConservationCollision(bodyA, bodyB);
                     }
                     else
                     {
@@ -140,7 +141,7 @@ public class ProjectileBody : MonoBehaviour
                 {
                     if (checkSpherePlaneCollision(bodyA, bodyB))
                     {
-                        
+                        //MomentumConservationCollision(bodyA, bodyB);
                         if (bodyA.isKinematic) 
                         {
                             bodyA = Fix(bodyA, bodyB);
@@ -166,7 +167,7 @@ public class ProjectileBody : MonoBehaviour
                 {
                     if (checkSphereHalfPlaneCollision(bodyA, bodyB))
                     {
-                        
+                        //MomentumConservationCollision(bodyA, bodyB);
                         if (bodyA.isKinematic)
                         {
                             bodyA = Fix(bodyA, bodyB);

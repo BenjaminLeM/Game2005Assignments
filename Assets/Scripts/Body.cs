@@ -14,6 +14,7 @@ public class Body : Shape
     public float radius = 0.5f;
     public bool isKinematic = true;
     public float coefficientOfFriction = 0.5f;
+    public float Bounciness = 0.0f;
     public Vector3 NetForce 
     {
         get;
@@ -38,9 +39,9 @@ public class Body : Shape
         Vector3 Acceleration = NetForce / mass;
         vel += Acceleration * dt;
         transform.position = transform.position + vel * dt;
-        if (vel.y <= -30.0f)
+        if (vel.y <= -20.0f)
         {
-            vel.y = -30.0f;
+            vel.y = -20.0f;
         }
         ResetForces();
     }
