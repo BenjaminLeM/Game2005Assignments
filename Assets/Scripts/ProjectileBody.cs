@@ -88,6 +88,31 @@ public class ProjectileBody : MonoBehaviour
         return bodyA;
     }
 
+    Body MomentumConservationCollision(Body bodyA, Body bodyB) 
+    {
+        Vector3 normal = (bodyB.transform.position - bodyA.transform.position).normalized;
+        Vector3 displacement = bodyA.transform.position - bodyB.transform.position;
+        float projection = Vector3.Dot(displacement, normal);
+
+        Vector3 RelativeVelocity = bodyB.vel - bodyA.vel;
+
+        Vector3 ClosingVelocity = Vector3.Dot(RelativeVelocity, normal) * normal;
+
+        
+
+        if (Vector3.Dot(RelativeVelocity, normal) >= 0) 
+        {}
+        else
+        {
+            bodyA.vel += (bodyB.mass / bodyA.mass) * RelativeVelocity;
+        }
+
+        //moves bodyA out of bodyB
+        //currently broken and does not do the intended action
+        bodyB.transform.position += normal * ((bodyB.radius - projection)/2);
+
+        return bodyA;
+    }
 
     private void checkCollision()
     {
@@ -102,7 +127,9 @@ public class ProjectileBody : MonoBehaviour
                 {
                     if (checkSphereSphereCollision(bodyA, bodyB))
                     {
-                        
+                        bodyA = MomentumConservationCollision(bodyA, bodyB);
+                        bodyB = MomentumConservationCollision(bodyB, bodyA);
+
                     }
                     else
                     {
