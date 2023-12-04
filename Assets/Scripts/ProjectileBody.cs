@@ -102,18 +102,18 @@ public class ProjectileBody : MonoBehaviour
                 {
                     if (checkSphereSphereCollision(bodyA, bodyB))
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                        
                     }
                     else
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                        
                     }
                 }
                 else if (bodyA.GetShape() == 0 && bodyB.GetShape() == 2) 
                 {
                     if (checkSpherePlaneCollision(bodyA, bodyB))
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                        
                         if (bodyA.isKinematic) 
                         {
                             bodyA = Fix(bodyA, bodyB);
@@ -121,25 +121,25 @@ public class ProjectileBody : MonoBehaviour
                     }
                     else
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                        
                     }
                 }
                 else if (bodyB.GetShape() == 0 && bodyA.GetShape() == 2)
                 {
                     if (checkSpherePlaneCollision(bodyB, bodyA))
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                        
                     }
                     else
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                        
                     }
                 }
                 else if (bodyA.GetShape() == 0 && bodyB.GetShape() == 3)
                 {
                     if (checkSphereHalfPlaneCollision(bodyA, bodyB))
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                        
                         if (bodyA.isKinematic)
                         {
                             bodyA = Fix(bodyA, bodyB);
@@ -147,18 +147,18 @@ public class ProjectileBody : MonoBehaviour
                     }
                     else
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                        
                     }
                 }
                 else if (bodyB.GetShape() == 0 && bodyA.GetShape() == 3)
                 {
                     if (checkSphereHalfPlaneCollision(bodyB, bodyA))
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                        
                     }
                     else
                     {
-                        bodyA.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                        
                     }
                 }
             }
