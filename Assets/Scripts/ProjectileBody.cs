@@ -114,6 +114,7 @@ public class ProjectileBody : MonoBehaviour
         else
         {
             bodyA.vel += ((bodyB.mass / bodyA.mass) * ClosingVelocity);
+            //bodyA.vel += (VelocityFinal);
         }
     }
 

@@ -250,13 +250,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShapeType: 0
-  vel: {x: 15, y: 0, z: 0}
-  mass: 1
+  vel: {x: 30, y: 0, z: 0}
+  mass: 1.5
   massInverse: 1
   drag: 0
   radius: 0.5
   isKinematic: 1
   coefficientOfFriction: 0.5
+  Bounciness: 0
 --- !u!135 &541288183
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -383,6 +384,7 @@ MonoBehaviour:
   radius: 0.5
   isKinematic: 1
   coefficientOfFriction: 0.5
+  Bounciness: 1
 --- !u!135 &543177870
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -463,7 +465,7 @@ Transform:
   m_GameObject: {fileID: 543177868}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.59, y: 6.01, z: 1.13}
+  m_LocalPosition: {x: -9.59, y: 6.01, z: 1.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -681,12 +683,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShapeType: 0
   vel: {x: 0, y: 0, z: 0}
-  mass: 4
+  mass: 1
   massInverse: 1
   drag: 0
   radius: 0.5
   isKinematic: 1
   coefficientOfFriction: 0.5
+  Bounciness: 0
 --- !u!1 &1037101112
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,6 +817,7 @@ MonoBehaviour:
   radius: 0.5
   isKinematic: 0
   coefficientOfFriction: 1
+  Bounciness: 0
 --- !u!1 &1186300503
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,6 +858,7 @@ MonoBehaviour:
   radius: 0.5
   isKinematic: 1
   coefficientOfFriction: 0.5
+  Bounciness: 0.7
 --- !u!135 &1186300505
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -934,7 +939,7 @@ Transform:
   m_GameObject: {fileID: 1186300503}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.58, y: 3.64, z: 1.18}
+  m_LocalPosition: {x: -9.58, y: 4.72, z: 1.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
