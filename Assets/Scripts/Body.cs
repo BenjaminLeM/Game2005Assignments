@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+
 
 public class Body : Shape
 {
@@ -14,7 +16,7 @@ public class Body : Shape
     public float radius = 0.5f;
     public bool isKinematic = true;
     public float coefficientOfFriction = 0.5f;
-    public float Bounciness = 0.0f;
+    public float Bounciness;
     public Vector3 NetForce 
     {
         get;
