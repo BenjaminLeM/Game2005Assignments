@@ -104,17 +104,62 @@ public class ProjectileBody : MonoBehaviour
         Vector3 ClosingVelocityRetained = Restitution * ClosingVelocity;
 
         Vector3 ClosingVelocityFinal = -ClosingVelocityRetained;
+        
+        float Impulse = -(1 + Restitution) * Vector3.Dot(RelativeVelocity, normal) * bodyA.mass * bodyB.mass / (bodyA.mass + bodyB.mass);
 
-        Vector3 Impulse = -(1 + Restitution) * ClosingVelocity * bodyA.mass * bodyB.mass / (bodyA.mass + bodyB.mass);
+        Vector3 VelocityChangeA = Impulse/bodyA.mass * -normal;
 
-        Vector3 VelocityFinal = Impulse/bodyA.mass;
+        Vector3 VelocityChangeB = Impulse / bodyB.mass * normal;
 
         if (Vector3.Dot(RelativeVelocity, normal) >= 0) 
         {}
         else
         {
-            bodyA.vel += ((bodyB.mass / bodyA.mass) * ClosingVelocity);
-            //bodyA.vel += (VelocityFinal);
+            //bodyA.vel += ((bodyB.mass / bodyA.mass) * ClosingVelocity);
+            bodyA.vel += (VelocityChangeA);
+            //bodyA.transform.position += normal * (bodyA.radius - projection);
+            bodyB.vel += (VelocityChangeB);
+        }
+    }
+
+    void MomentumConservationCollisionAsymmtrical(Body bodyA, Body bodyB, Vector3 Normal)
+    {
+        Vector3 normal = (bodyB.transform.position - bodyA.transform.position).normalized;
+        Vector3 displacement = bodyA.transform.position - bodyB.transform.position;
+        float projection = Vector3.Dot(displacement, normal);
+
+        Vector3 RelativeVelocity = bodyB.vel - bodyA.vel;
+
+        Vector3 ClosingVelocity = Vector3.Dot(RelativeVelocity, normal) * normal;
+
+        //average of the bounciness
+        float Restitution = (bodyA.Bounciness + bodyB.Bounciness) / 2;
+
+        Vector3 ClosingVelocityRetained = Restitution * ClosingVelocity;
+
+        Vector3 ClosingVelocityFinal = -ClosingVelocityRetained;
+
+        float ImpulsehasNonKinematic = -(1 + Restitution) * Vector3.Dot(RelativeVelocity, Normal);
+
+        Vector3 VelocityChangeNonKine = ImpulsehasNonKinematic * Normal;
+
+        if (Vector3.Dot(RelativeVelocity, normal) >= 0)
+        { }
+        else
+        {
+            //bodyA.vel += ((bodyB.mass / bodyA.mass) * ClosingVelocity);
+            if (bodyA.isKinematic && !bodyB.isKinematic)
+            {
+                bodyA.vel += (-VelocityChangeNonKine);
+            }
+            else if (!bodyA.isKinematic && bodyB.isKinematic)
+            {
+                bodyB.vel += (-VelocityChangeNonKine);
+            }
+            else if (!bodyA.isKinematic && !bodyB.isKinematic) { }
+            else
+            { 
+            }
         }
     }
 
@@ -131,7 +176,20 @@ public class ProjectileBody : MonoBehaviour
                 {
                     if (checkSphereSphereCollision(bodyA, bodyB))
                     {
-                        MomentumConservationCollision(bodyA, bodyB);
+                        if (bodyA.isKinematic && bodyB.isKinematic)
+                        {
+                            MomentumConservationCollision(bodyA, bodyB);
+                        }
+                        else if (bodyA.isKinematic && !bodyB.isKinematic) 
+                        {
+                            Vector3 Normal = bodyB.transform.rotation * new Vector3(0, 1, 0);
+                            MomentumConservationCollisionAsymmtrical(bodyA, bodyB, Normal);
+                        } 
+                        else if (!bodyA.isKinematic && bodyB.isKinematic) 
+                        {
+                            Vector3 Normal = bodyA.transform.rotation * new Vector3(0, 1, 0);
+                            MomentumConservationCollisionAsymmtrical(bodyA, bodyB, Normal);
+                        }
                     }
                     else
                     {
@@ -142,7 +200,22 @@ public class ProjectileBody : MonoBehaviour
                 {
                     if (checkSpherePlaneCollision(bodyA, bodyB))
                     {
-                        //MomentumConservationCollision(bodyA, bodyB);
+                        if (bodyA.isKinematic && bodyB.isKinematic)
+                        {
+                            MomentumConservationCollision(bodyA, bodyB);
+                        }
+                        else if (bodyA.isKinematic && !bodyB.isKinematic)
+                        {
+                            Vector3 Normal = bodyB.transform.rotation * new Vector3(0, 1, 0);
+                            MomentumConservationCollisionAsymmtrical(bodyA, bodyB, Normal);
+                        }
+                        else if (!bodyA.isKinematic && bodyB.isKinematic)
+                        {
+                            Vector3 Normal = bodyA.transform.rotation * new Vector3(0, 1, 0);
+                            MomentumConservationCollisionAsymmtrical(bodyA, bodyB, Normal);
+                        }
+                        
+                        
                         if (bodyA.isKinematic) 
                         {
                             bodyA = Fix(bodyA, bodyB);
@@ -168,10 +241,19 @@ public class ProjectileBody : MonoBehaviour
                 {
                     if (checkSphereHalfPlaneCollision(bodyA, bodyB))
                     {
-                        //MomentumConservationCollision(bodyA, bodyB);
-                        if (bodyA.isKinematic)
+                        if (bodyA.isKinematic && bodyB.isKinematic)
                         {
-                            bodyA = Fix(bodyA, bodyB);
+                            MomentumConservationCollision(bodyA, bodyB);
+                        }
+                        else if (bodyA.isKinematic && !bodyB.isKinematic)
+                        {
+                            Vector3 Normal = bodyB.transform.rotation * new Vector3(0, 1, 0);
+                            MomentumConservationCollisionAsymmtrical(bodyA, bodyB, Normal);
+                        }
+                        else if (!bodyA.isKinematic && bodyB.isKinematic)
+                        {
+                            Vector3 Normal = bodyA.transform.rotation * new Vector3(0, 1, 0);
+                            MomentumConservationCollisionAsymmtrical(bodyA, bodyB, Normal);
                         }
                     }
                     else
